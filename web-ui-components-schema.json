@@ -2,6 +2,37 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Web UI Component Schema",
     "description": "Schema for describing web UI components",
+    "type": "object",
+    "properties": {
+        "pages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "label": { "type": "string" },
+                    "components": {
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                { "$ref": "#/definitions/textInput" },
+                                { "$ref": "#/definitions/textArea" },
+                                { "$ref": "#/definitions/checkbox" },
+                                { "$ref": "#/definitions/radioButton" },
+                                { "$ref": "#/definitions/select" },
+                                { "$ref": "#/definitions/datePicker" },
+                                { "$ref": "#/definitions/timePicker" },
+                                { "$ref": "#/definitions/fileUpload" },
+                                { "$ref": "#/definitions/textView" },
+                                { "$ref": "#/definitions/button" }
+                            ]
+                        }
+                    }
+                },
+                "required": ["id", "components"]
+            }
+        }
+    },
     "definitions": {
         "baseComponent": {
             "type": "object",
@@ -11,6 +42,19 @@
                 "style": { "type": "object", "description": "Styling properties" }
             },
             "required": ["id"]
+        },
+        "button": {
+            "allOf": [
+                { "$ref": "#/definitions/baseComponent" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "type": "string", "enum": ["button"] },
+                        "action": { "type": "string" }
+                    },
+                    "required": ["type"]
+                }
+            ]
         },
         "textInput": {
             "allOf": [
@@ -32,137 +76,6 @@
                     "required": ["type"]
                 }
             ]
-        },
-        "textArea": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["text_area"] },
-                        "rows": { "type": "integer" },
-                        "cols": { "type": "integer" }
-                    },
-                    "required": ["type"]
-                }
-            ]
-        },
-        "checkbox": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["checkbox"] },
-                        "checked": { "type": "boolean", "default": false }
-                    },
-                    "required": ["type"]
-                }
-            ]
-        },
-        "radioButton": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["radio_button"] },
-                        "name": { "type": "string" },
-                        "value": { "type": "string" }
-                    },
-                    "required": ["type", "name", "value"]
-                }
-            ]
-        },
-        "select": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["select"] },
-                        "options": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "value": { "type": "string" },
-                                    "label": { "type": "string" }
-                                },
-                                "required": ["value"]
-                            }
-                        }
-                    },
-                    "required": ["type", "options"]
-                }
-            ]
-        },
-        "datePicker": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["date_picker"] },
-                        "format": { "type": "string" }
-                    },
-                    "required": ["type"]
-                }
-            ]
-        },
-        "timePicker": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["time_picker"] },
-                        "format": { "type": "string" }
-                    },
-                    "required": ["type"]
-                }
-            ]
-        },
-        "fileUpload": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["file_upload"] },
-                        "accept": { "type": "string" },
-                        "multiple": { "type": "boolean", "default": false }
-                    },
-                    "required": ["type"]
-                }
-            ]
-        },
-        "textView": {
-            "allOf": [
-                { "$ref": "#/definitions/baseComponent" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": { "type": "string", "enum": ["text_view", "paragraph"] },
-                        "text": { "type": "string" }
-                    },
-                    "required": ["type", "text"]
-                }
-            ]
         }
-    },
-    "type": "array",
-    "items": {
-        "oneOf": [
-            { "$ref": "#/definitions/textInput" },
-            { "$ref": "#/definitions/textArea" },
-            { "$ref": "#/definitions/checkbox" },
-            { "$ref": "#/definitions/radioButton" },
-            { "$ref": "#/definitions/select" },
-            { "$ref": "#/definitions/datePicker" },
-            { "$ref": "#/definitions/timePicker" },
-            { "$ref": "#/definitions/fileUpload" },
-            { "$ref": "#/definitions/textView" }
-        ]
     }
 }

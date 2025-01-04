@@ -22,7 +22,7 @@
    將本 Repository 的 `web_ui_schema.json` 下載至本地，或直接引用遠端 URL，例如：
 
    ```
-   https://raw.githubusercontent.com/richblack/Web-UI-Schema/refs/heads/main/web-ui-components-schema.json
+   https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json
    ```
 
 2. **安裝 VSCode 的 YAML 擴展工具**
@@ -34,7 +34,7 @@
      ```json
      {
        "yaml.schemas": {
-         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/refs/heads/main/web-ui-components-schema.json": "*.yaml"
+         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": "*.yaml"
        }
      }
      ```
@@ -51,7 +51,7 @@
 以下是一個描述登入頁與忘記密碼頁的 YAML 範例：
 
 ```yaml
-$schema: "https://raw.githubusercontent.com/<your_username>/web-ui-schema/main/web_ui_schema.json"
+$schema: "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json"
 
 pages:
   - id: "login"

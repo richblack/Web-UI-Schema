@@ -20,7 +20,7 @@ While backend technologies, such as OpenAPI and database planning, have YAML-bas
 1. **Download the JSON Schema**
    Download the `web_ui_schema.json` file from this repository to your local machine, or reference it directly via a remote URL, such as:
    ```
-   https://raw.githubusercontent.com/richblack/Web-UI-Schema/refs/heads/main/web-ui-components-schema.json
+   https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json
    ```
 
 2. **Install the YAML Extension in VSCode**
@@ -31,7 +31,7 @@ While backend technologies, such as OpenAPI and database planning, have YAML-bas
      ```json
      {
        "yaml.schemas": {
-         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/refs/heads/main/web-ui-components-schema.json": "*.yaml"
+         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": "*.yaml"
        }
      }
      ```
@@ -46,7 +46,7 @@ While backend technologies, such as OpenAPI and database planning, have YAML-bas
 Below is an example describing a login page and a forgot password page:
 
 ```yaml
-$schema: "https://raw.githubusercontent.com/<your_username>/web-ui-schema/main/web_ui_schema.json"
+$schema: "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json"
 
 pages:
   - id: "login"
