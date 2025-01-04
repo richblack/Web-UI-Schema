@@ -2,11 +2,11 @@
 
 ## 緣起 / Background
 
-當我們與 AI 溝通時，例如請 AI 幫忙產生網頁，甚至描述整個網站或 Web App 的規劃，若使用自然語言，容易因為語意模糊產生誤解，導致重複修改的成本。因此，我希望使用 YAML 作為結構化的描述方式，清楚定義每個網頁的組成元素，從而避免這類問題。
+當我們與 AI 溝通時，例如請 AI 幫忙產生網頁，自然語言常產生歧義，導致 AI 理解錯誤產出錯誤的結果，更不要說描述 Web App 前後端規劃這種複雜任務。與 AI 溝通，使用結構化的文件比自然語言好很多，本計劃想使用 YAML 格式，清楚定義每個網頁的組成元素，避免這類問題。
 
-目前，大多數前端使用 Figma 等 prototyping 工具，但這類工具產生的多為圖片，僅適用於人類查看，對於與 AI 的雙向溝通並不友好。而 YAML 提供了一種簡單且清晰的方式，適合用於描述網頁結構。
+目前，規劃時常使用 prototyping 工具（如 Figma），但這類工具產出圖片僅適於人類查看，AI 閱讀花費大量的 Token，可能對細節產生誤解，而且難以雙向溝通。而 YAML 提供了一種簡單且清晰的方式，適合用於結構化地描述網頁結構，YAML 像是除去括號的 JSON，用「特徵：值」的格式標示，對於機器和人類都易讀。
 
-雖然後端技術，例如 OpenAPI 和資料庫規劃，都有 YAML 的標準規範，但前端部分似乎缺乏類似的通用標準。因此，我制定了這個 Web UI Component Schema，並搭配 lint 工具使用，以確保使用者不會遺漏必要的欄位，從而提升效率。
+後端技術要用 YAML 企劃，例如 OpenAPI 和資料庫規劃，都已經有 YAML 標準規範了，但前端則缺乏類似的通用標準。因此，本計劃把常用的 Web UI Component Schema 訂出，就是每個元件有多個欄位要填寫，這些複雜資訊很難記憶，可以搭配 lint 工具，使用者可以在 VSCode 上自動補全，還不會遺漏必要欄位。
 
 > [English Version](./README_english.md)
 
@@ -16,12 +16,12 @@
 
 ### 1. 在 VSCode 中使用 Lint 工具
 
-#### 步驟：
+#### 步驟
 
 1. **下載 JSON Schema**
    將本 Repository 的 `web_ui_schema.json` 下載至本地，或直接引用遠端 URL，例如：
 
-   ```
+   ```Bash
    https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json
    ```
 
@@ -34,12 +34,27 @@
      ```json
      {
        "yaml.schemas": {
-         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": "*.yaml"
+           "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": ["*.yaml", "*.yml"]
+           // 若要使用本地檔案，請改用：
+           // "./web-ui-components-schema.json": ["*.yaml", "*.yml"]
+       },
+       "yaml.completion": true,
+       "yaml.validate": true,
+       "yaml.format.enable": true,
+       "yaml.customTags": [],
+       "[yaml]": {
+           "editor.insertSpaces": true,
+           "editor.tabSize": 2,
+           "editor.autoIndent": "keep",
+           "editor.formatOnType": true,
+           "editor.formatOnSave": true
        }
      }
      ```
 
-   - 這將允許 VSCode 自動對 `.yaml` 文件進行驗證並提供語法提示。
+   - 這將允許 VSCode 自動對 `.yaml` 和 `.yml` 檔案進行驗證並提供語法提示
+   - 支援格式化和自動完成功能
+   - 可以選擇使用遠端或本地的 schema 檔案
 
 4. **編寫 YAML 文件**
    - 使用 YAML 描述您的網頁結構，並確保符合 Schema 的規範。

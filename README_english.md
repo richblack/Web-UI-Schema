@@ -2,11 +2,11 @@
 
 ## Background
 
-When communicating with AI, for instance, to generate web pages or describe the planning of an entire website or web app, using natural language can often lead to misunderstandings due to its ambiguity. This results in higher costs due to repeated modifications. To avoid such issues, I propose using YAML as a structured description method to clearly define the components of each web page.
+Natural language communication with AI for web development tasks, especially front-end/back-end planning, often suffers from ambiguity, leading to incorrect outputs. Structured documents are a far superior alternative. This project proposes using YAML to precisely define web page elements, mitigating this issue.
 
-Currently, most frontend developers use prototyping tools like Figma, which produce images suitable for human viewing but not for effective two-way communication with AI. YAML offers a straightforward and clear method for describing web structures, making it ideal for this purpose.
+While prototyping tools like Figma are common, their image-based outputs are inefficient for AI processing, consuming excessive tokens, potentially misrepresenting details, and hindering bidirectional communication. YAML offers a simpler, clearer, machine- and human-readable solution, resembling bracketless JSON with its "feature: value" notation.
 
-While backend technologies, such as OpenAPI and database planning, have YAML-based standards, the frontend seems to lack a similar universal standard. Therefore, I created this Web UI Component Schema and paired it with linting tools to ensure users do not miss necessary fields, thereby improving efficiency.
+Existing YAML standards effectively address back-end aspects like OpenAPI and database schema definition. However, a comparable front-end standard is lacking. Therefore, this project defines a Web UI Component Schema, specifying required fields for each component. This complex information, difficult for humans to memorize, can be readily managed with linting tools, providing auto-completion in VS Code and ensuring no required fields are omitted.
 
 > [中文版說明 (Chinese Version)](./README.md)
 
@@ -16,26 +16,45 @@ While backend technologies, such as OpenAPI and database planning, have YAML-bas
 
 ### 1. Using Lint Tools in VSCode
 
-#### Steps:
+#### Steps
+
 1. **Download the JSON Schema**
    Download the `web_ui_schema.json` file from this repository to your local machine, or reference it directly via a remote URL, such as:
-   ```
-   https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json
-   ```
+
+    ```Bash
+    https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json
+    ```
 
 2. **Install the YAML Extension in VSCode**
    - Search for and install the `YAML` extension (provided by Red Hat).
 
 3. **Configure the JSON Schema**
    - Add or edit `.vscode/settings.json` in your workspace with the following content:
+
      ```json
      {
        "yaml.schemas": {
-         "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": "*.yaml"
+           "https://raw.githubusercontent.com/richblack/Web-UI-Schema/main/web-ui-components-schema.json": ["*.yaml", "*.yml"]
+           // For local file usage, use:
+           // "./web-ui-components-schema.json": ["*.yaml", "*.yml"]
+       },
+       "yaml.completion": true,
+       "yaml.validate": true,
+       "yaml.format.enable": true,
+       "yaml.customTags": [],
+       "[yaml]": {
+           "editor.insertSpaces": true,
+           "editor.tabSize": 2,
+           "editor.autoIndent": "keep",
+           "editor.formatOnType": true,
+           "editor.formatOnSave": true
        }
      }
      ```
-   - This allows VSCode to automatically validate and provide syntax suggestions for `.yaml` files.
+
+   - This allows VSCode to automatically validate and provide syntax suggestions for both `.yaml` and `.yml` files
+   - Supports formatting and auto-completion features
+   - You can choose to use either remote or local schema files
 
 4. **Write YAML Files**
    - Use YAML to describe your web page structure and ensure it complies with the schema standards.
@@ -43,6 +62,7 @@ While backend technologies, such as OpenAPI and database planning, have YAML-bas
 ### 2. Example YAML File
 
 #### Example Description
+
 Below is an example describing a login page and a forgot password page:
 
 ```yaml
@@ -84,6 +104,7 @@ pages:
 ## Schema Structure
 
 This JSON Schema defines common Web UI components, including:
+
 - **Text Input**
 - **Text Area**
 - **Checkbox**
@@ -152,4 +173,3 @@ Feel free to submit Issues or Pull Requests! We look forward to collaborating wi
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
